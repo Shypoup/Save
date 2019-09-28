@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,Button,StyleSheet,PermissionsAndroid,Linking} from 'react-native';
+import {View,Button,StyleSheet,PermissionsAndroid,Linking,Text} from 'react-native';
 import wifi from 'react-native-android-wifi';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoder';
@@ -7,7 +7,8 @@ import Geocoder from 'react-native-geocoder';
 export default class App extends React.Component{
   
   state={
-    addr: {}
+    addr: {},
+    formattedAddress:''
   };
 
   async requestLocationPermission() {
@@ -33,11 +34,12 @@ export default class App extends React.Component{
               // }) .catch(err => console.log(err))
               Geolocation.getCurrentPosition(
                 (position) => {
-                     console.log(position.coords.longitude);
+                     console.log(position);
                      Geocoder.geocodePosition({lat:position.coords.latitude,lng:position.coords.longitude}).then((res) => {
                     //   let data = res.filter(data => data.position.lng == address.lng && data.position.lat == address.lat);
                     // console.log(data);
                       console.log(res);
+                      return this.setState({formattedAddress: res[0].formattedAddress})
                   
                   }).catch(err => console.log(err))
                 }, 
@@ -74,6 +76,8 @@ export default class App extends React.Component{
           >
 
           </Button>
+
+          <Text>{this.state.formattedAddress}</Text>
        
       </View>
     )
