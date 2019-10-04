@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {View,Button,StyleSheet,PermissionsAndroid,Linking,Text, AsyncStorage,YellowBox} from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import DataAndWifi from './mobile_services/data_wifi';
 import FindLoction from './mobile_services/find_location';
+import SendMail from './mobile_services/send_mail';
 
 export default class App extends React.Component{
   
@@ -82,7 +84,22 @@ export default class App extends React.Component{
 
           </Button>
 
+          <Button
+            title = 'send_Mail'
+            onPress = {() => {new SendMail().Send_Email()}}
+          >
+
+          </Button>
+
           <Text>{this.state.formattedAddress}</Text>
+
+          <QRCode
+            value="Hesham"
+            size = {200}
+          />
+
+
+
        
       </View>
     )

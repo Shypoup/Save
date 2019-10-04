@@ -36,7 +36,8 @@ export default class FindLoction extends React.Component {
                 (position) => {
                     //  console.log(position);
                         Geocoder.geocodePosition({lat:position.coords.latitude,lng:position.coords.longitude}).then(async(res) => {
-                   //     console.log(res[0].formattedAddress);
+                        console.log(res[1].formattedAddress);
+                        await AsyncStorage.clear();
                         await AsyncStorage.setItem('Address',res[0].formattedAddress)
                         YellowBox.ignoreWarnings(['Warning: Async Storage has been extracted from react-native core']);
                         }).catch(err => console.log(err))
@@ -46,7 +47,7 @@ export default class FindLoction extends React.Component {
                         console.log(error.code, error.message);
                     },
     
-                { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000, showLocationDialog: false }
+                { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000, showLocationDialog: false, forceRequestLocation: true }
             );        
         }
         
